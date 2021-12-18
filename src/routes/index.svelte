@@ -1,8 +1,8 @@
 <script lang="ts">
+	import FileImporter from "$cmp/FileImporter.svelte";
 </script>
-<title>
-	Svelte template
-</title>
-<div>
-	<h1>Hello world!</h1>
-</div>
+
+<FileImporter on:import={console.log} text='Import pack'/>
+
+<style lang="scss">
+</style>
