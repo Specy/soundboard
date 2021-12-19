@@ -5,37 +5,42 @@
 	import Title from '$cmp/Title.svelte'
 	import Pack from '$cmp/Pack.svelte'
 	import { packStore } from '$stores/Packs'
+	import { theme } from '$lib/theme'
 	let packs = packStore.data
 </script>
 
-<Title>Welcome to the Soundboard</Title>
-<div class="align-left">
-	<FileImporter>
-		<Button value="Import Pack" />
-	</FileImporter>
-</div>
+
 <Title style="margin-top: 2rem;">Your Packs</Title>
 <div class="pack-wrapper">
 	{#each $packs as pack}
 		<Pack 
 			title={pack.name}
+			author={pack.author}
 			description={pack.description}
 			image={pack.image}
+			ID={pack.id}
 		/>
 	{/each}
 </div>
-<a href="pack/create" class="new-pack">
-	Create new pack
-	<div class="icon">
-		<FaPlus />
-	</div>
-</a>
+<div class="pack-bottom">
+	<a href="pack/create" class="new-pack" class:dark={$theme === 'dark'}>
+		Create new pack
+		<div class="icon">
+			<FaPlus />
+		</div>
+	</a>
+	<FileImporter>
+		<Button value="Import Pack" />
+	</FileImporter>
+</div>
+
 
 <style lang="scss">
 	@import '../variables.scss';
-	.align-left {
+	.pack-bottom {
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
+		align-items: center;
 	}
 	.pack-wrapper {
 		display: grid;
@@ -53,6 +58,10 @@
 		align-items: center;
 		margin-top: 1rem;
 		width: fit-content;
+		transition: all 0.2s;
+	}
+	.dark{
+		color: $textMain;
 	}
 	.new-pack:hover{
 		color: $accent;
@@ -63,5 +72,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	@media (max-width: 650px) {
+		.pack-wrapper{
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

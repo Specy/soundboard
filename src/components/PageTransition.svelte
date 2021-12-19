@@ -2,7 +2,6 @@
 	import { fly } from 'svelte/transition'
 	export let refresh = ''
     import { theme } from "$lib/theme";
-	$: console.log($theme)
 </script>
 
 {#key refresh}
@@ -26,7 +25,7 @@
 	@media (max-width: 650px) {
 		.page {
 			margin-top: 1rem;
-			padding: 1rem 0.5rem;
+			padding: 2rem 1rem;
 		}
 	}
 </style>

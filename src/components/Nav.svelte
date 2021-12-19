@@ -54,7 +54,7 @@
 			<a
 				href="/pack/create"
 				on:click={() => (menuOpen = false)}
-				style={path === '/pack/create' ? 'color:#b00752' : ''}>Register</a
+				style={path === '/pack/create' ? 'color:#b00752' : ''}>Create</a
 			>
 		</div>
 	</div>
