@@ -1,6 +1,9 @@
 import { writable } from "svelte/store";
+import type { Writable } from 'svelte/store'
+
+
 class Packs{
-    data:Pack[] = []
+    data:Writable<Pack[]> = writable([])
     constructor(){
 
     }
@@ -15,6 +18,9 @@ class Packs{
     remove = () => {
 
     }
+    sync = () => {
+
+    }
 }
 
 class Pack{
@@ -22,6 +28,7 @@ class Pack{
     name:string = ""
     description:string = ""
     audios:Audio[] = []
+    image: string = ""
     constructor(){
 
     }

@@ -21,11 +21,12 @@
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		padding: 1rem;
+		padding: 1rem 20vw;
 	}
 	@media (max-width: 650px) {
 		.page {
 			margin-top: 1rem;
+			padding: 1rem 0.5rem;
 		}
 	}
 </style>

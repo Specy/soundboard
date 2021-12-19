@@ -36,7 +36,9 @@
     "axios-auth-refresh": "^3.2.1",
     "cookie": "^0.4.1",
     "email-validator": "^2.0.4",
+    "localforage": "^1.10.0",
     "sass": "^1.43.2",
-    "svelte-icons": "^2.1.0"
+    "svelte-icons": "^2.1.0",
+    "zangodb": "^1.0.8"
   }
 }
