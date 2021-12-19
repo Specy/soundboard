@@ -39,7 +39,7 @@
 					{/if}
 				</div>
 
-				<a class="icon" href="https://github.com/Specy" target="_blank">
+				<a class="icon" href="https://github.com/Specy/soundboard" target="_blank">
 					<FaGithub />
 				</a>
 				<a

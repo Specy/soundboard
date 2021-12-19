@@ -26,8 +26,8 @@ export class Db extends Dexie {
     constructor() {
         super('db');
         this.version(1).stores({
-            packs: 'id, author, name',
-            audios: 'id, packId, name'
+            packs: 'id',
+            audios: 'id, packId'
         });
     }
 }

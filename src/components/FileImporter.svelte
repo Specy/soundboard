@@ -11,7 +11,11 @@
 		const file = event.target.files[0]
 		const fileReader = new FileReader()
 		fileReader.onloadend = () => {
-			dispatch('import', fileReader.result)
+			const result = {
+				data: fileReader.result,
+				file: file
+			}
+			dispatch('import', result)
 		}
 		if (as === 'text') fileReader.readAsText(file)
 		if (as === 'buffer') fileReader.readAsArrayBuffer(file)

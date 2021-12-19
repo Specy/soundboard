@@ -29,8 +29,8 @@
     <Input bind:value={name} title='Pack name' hideStatus={true}/>
     <Input bind:value={description} title='Description' hideStatus={true}/>
     <Input bind:value={image} title='Image' hideStatus={true}/>
+    <Button value='Create' on:click={create} style='margin-top:2rem'/>
 </div>
-<Button value='Create' on:click={create}/>
 
 
 
@@ -39,9 +39,9 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.5rem;
-        margin-bottom: 1rem;
+        padding: 0.8rem;
+        border-radius: 0.8rem;
+        background-color: #f6f6f6;
+        box-shadow: 1px 1px 5px #45455940;
     }
-	.sub-title {
-
-	}
 </style>

@@ -3,7 +3,8 @@ import type { Writable } from 'svelte/store'
 import { browser } from "$app/env";
 import type { Db } from "../utils/db";
 let DB: Db
-
+let audioContext: AudioContext
+if(browser) audioContext = new AudioContext()
 function id(length = 7) {
     let result = '';
     for(let i = 0; i < length; i++) {
@@ -22,10 +23,9 @@ class Packs{
     load = async () => {
         this.loaded = true
         const data = (await DB.packs.toArray()).map(pack => new Pack(pack))
-        console.log(data)
         this.data.set(data)
     }
-    get = (id:string) => {
+    get = (id:string):Pack | null => {
        const data = get(this.data)
        return data.find(obj => obj.id === id)
     }
@@ -39,8 +39,10 @@ class Packs{
         return pack
     }
 
-    remove = () => {
+    remove = async (id:string) => {
         if(!this.loaded) return
+        await DB.packs.delete(id)
+        this.data.update(d => d.filter((p) => p.id !== id))
     }
     sync = () => {
         if(!this.loaded) return
@@ -60,36 +62,72 @@ class Pack{
     author:string = ""
     name:string = ""
     description:string = ""
-    audios:Audio[] = []
+    audios:Writable<Audio[]> = writable([])
     image: string = ""
     constructor(data: newPack){
         this.author = data.author
         this.name = data.name
-        this. description = data.description
+        this.description = data.description
         this.image = data.image
         this.id = data.id || ""
     }
-    load = () => {
-
+    load = async () => {
+        const query = await DB.audios.where({packId: this.id}).toArray()
+        const audios = query.map(audio => new Audio(audio))
+        await Promise.all(audios.map(audio => audio.decode(audioContext)))
+        this.audios.set(audios)
     }
-    add = () => {
-
+    addAudio = async (data: newAudio) => {
+        const audioId = id(7)
+        const newAudio = new Audio(data)
+        newAudio.id = audioId
+        newAudio.packId = this.id
+        await DB.audios.add(newAudio)
+        this.audios.update((audios) => [...audios, newAudio] )
     }
-    remove = () => {
-
+    removeAudio = async (id:string) => {
+        await DB.packs.delete(id)
+        this.audios.update(d => d.filter((a) => a.id !== id))
     }
-    play = () => {
-        
+
+    play = (audio: Audio) => {
+        let player = audioContext.createBufferSource()
+        player.buffer = audio.decoded
+        player.connect(audioContext.destination)
+        player.start(0)
+        player.onended = () => {
+            player.stop()
+            player.disconnect()
+        }
     }
 }
 
+
+type newAudio = {
+    name: string
+    description: string
+    id?: string
+    packId?: string
+    buffer?: any
+}
 class Audio{
     name:string = ""
     description:string = ""
     buffer: any //add this
-    constructor(){
+    decoded: any
+    id: string = ""
+    packId: string = ""
 
-    }   
+    constructor(data: newAudio){
+        this.name = data.name
+        this.description = data.description
+        this.id = data.id || ''
+        this.packId = data.packId || ''
+        this.buffer = data.buffer || new ArrayBuffer(4)
+    }  
+    decode = async (context: AudioContext) => {
+        this.decoded = await context.decodeAudioData(this.buffer)
+    } 
 }
 const packStore = new Packs() 
 

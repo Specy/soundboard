@@ -20,8 +20,7 @@
     .btn {
 		width: 100%;
 		padding: 0.5rem 1rem;
-		margin-top: 0.5rem;
-		border-radius: 0.5rem;
+		border-radius: 0.4rem;
 		color: white;
 		text-align: center;
 		display: flex;
