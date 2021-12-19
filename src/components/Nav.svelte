@@ -52,9 +52,9 @@
 				>Home</a
 			>
 			<a
-				href="/register"
+				href="/pack/create"
 				on:click={() => (menuOpen = false)}
-				style={path === '/register' ? 'color:#b00752' : ''}>Register</a
+				style={path === '/pack/create' ? 'color:#b00752' : ''}>Register</a
 			>
 		</div>
 	</div>
