@@ -3,6 +3,7 @@
     import FaTrashAlt from 'svelte-icons/fa/FaTrashAlt.svelte'
     import FaShareAlt from 'svelte-icons/fa/FaShareAlt.svelte'
     import { createEventDispatcher } from 'svelte'
+    import { theme } from '$lib/theme';
 
     const dispatch = createEventDispatcher()
     function dis(event,type){
@@ -13,7 +14,7 @@
     export let description: string = ""
 </script>
 
-<div class="audio" >
+<div class="audio" class:audioDark={$theme === 'dark'}>
     <div class="column" style="padding: 0.3rem;">
         <div class="title">
             {title}
@@ -52,6 +53,7 @@
 
 
 <style lang="scss">
+    @import '../variables.scss';
     .audio{
         display: flex;
         padding: 0.4rem;
@@ -61,6 +63,11 @@
         background-color: #f6f6f6;
         box-shadow: 1px 1px 5px #45455940;
         justify-content: space-between;
+    }
+    .audioDark{
+        background-color: $dark;
+        color: white;
+        box-shadow: unset;
     }
     .icon{
         width: 1.2rem;
@@ -74,14 +81,14 @@
     .buttons{
         display: grid;
         height: 3.4rem;
+        width: 4.2rem;
         margin-left: 0.8rem;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0,1fr));
         border-radius: 0.4rem;
         align-items: center;
-        background-color: yellow;
         overflow: hidden;
         .icon{
-            width: 2rem;
+            width: 2.1rem;
             padding: 0.5rem;
             display: flex;
             color: white;
@@ -91,6 +98,7 @@
     }
     .title{
         font-size: 1rem;
+        word-break: break-all;
         font-weight: bold;
         margin-bottom: 0.5rem;
     }

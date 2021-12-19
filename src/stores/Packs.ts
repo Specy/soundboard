@@ -42,6 +42,7 @@ class Packs{
     remove = async (id:string) => {
         if(!this.loaded) return
         await DB.packs.delete(id)
+        await DB.audios.delete(id)
         this.data.update(d => d.filter((p) => p.id !== id))
     }
     sync = () => {
@@ -82,11 +83,12 @@ class Pack{
         const newAudio = new Audio(data)
         newAudio.id = audioId
         newAudio.packId = this.id
-        await DB.audios.add(newAudio)
+        await DB.audios.add(newAudio.toObj())
+        newAudio.decode(audioContext)
         this.audios.update((audios) => [...audios, newAudio] )
     }
     removeAudio = async (id:string) => {
-        await DB.packs.delete(id)
+        await DB.audios.delete(id)
         this.audios.update(d => d.filter((a) => a.id !== id))
     }
 
@@ -99,6 +101,7 @@ class Pack{
             player.stop()
             player.disconnect()
         }
+        return player
     }
 }
 
@@ -125,10 +128,19 @@ class Audio{
         this.packId = data.packId || ''
         this.buffer = data.buffer || new ArrayBuffer(4)
     }  
+    toObj = () => {
+        return {
+            name:this.name,
+            description: this.description,
+            buffer: this.buffer,
+            id: this.id,
+            packId: this.packId
+        }
+    }
     decode = async (context: AudioContext) => {
-        this.decoded = await context.decodeAudioData(this.buffer)
+        this.decoded = await context.decodeAudioData(this.buffer.slice(0))
     } 
-}
+}   
 const packStore = new Packs() 
 
 async function init() {

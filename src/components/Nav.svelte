@@ -30,6 +30,8 @@
 
 	<div class="mobile-menu" class:navHidden class:mobileMenuDark={$theme === 'dark'}>
 		<div class="mobile-row">
+			<div style="font-size: 1.1rem; display:flex; align-items:center">
+			</div>
 			<div class="top-mobile-menu">
 				<div
 					on:click={() => {

@@ -14,6 +14,7 @@ const config = {
 					$lib: resolve('./src/lib/'),
 					$sec: resolve('./src/'),
 					$stores: resolve('./src/stores/'),
+					$utils: resolve('./src/utils/')
 				}
 			}
 		}

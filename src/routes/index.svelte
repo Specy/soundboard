@@ -29,9 +29,7 @@
 			<FaPlus />
 		</div>
 	</a>
-	<FileImporter>
-		<Button value="Import Pack" />
-	</FileImporter>
+
 </div>
 
 
