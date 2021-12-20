@@ -5,7 +5,7 @@
 	import { packStore } from '$stores/Packs'
     import { goto } from '$app/navigation';
     import { toast } from '$cmp/toast'
-import { theme } from '$lib/theme';
+    import { theme } from '$lib/theme';
     let author = ''
     let name = ''
     let description = ''
@@ -22,7 +22,9 @@ import { theme } from '$lib/theme';
         goto('/pack/'+pack.id)
     }
 </script>
-
+<title>
+    Create new pack
+</title>
 <Title>Create new pack</Title>
 
 <div class="input-wrapper" class:dark={$theme === 'dark'}>

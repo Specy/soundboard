@@ -73,6 +73,9 @@
 </script>
 
 {#if pack}
+	<title>
+		{pack.name}
+	</title>
 	<div class="pack-top">
 		<div class="column">
 			<div class="pack-img">
@@ -126,7 +129,7 @@
 		<Button value="Create" style="margin-top:1rem;" on:click={addAudio} />
 	</div>
 {:else}
-	<Title>Loading...</Title>
+	<Title>No audio pack</Title>
 {/if}
 
 <style lang="scss">

@@ -77,16 +77,6 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	.profile {
-		display: flex;
-		align-items: center;
-		height: 2rem;
-		color: $textFlip;
-		transition: all 0.3s;
-	}
-	.profile:hover {
-		color: $accent;
-	}
 	.mobile-menu {
 		position: absolute;
 		top: 0;
@@ -175,10 +165,6 @@
 		}
 		.desktop-menu {
 			display: none;
-		}
-		.profile {
-			margin-right: 1rem;
-			padding: 0.3rem;
 		}
 		.nav {
 			position: fixed;

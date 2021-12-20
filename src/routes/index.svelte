@@ -7,16 +7,23 @@
 	import { packStore } from '$stores/Packs'
 	import { theme } from '$lib/theme'
 	import PackImporter from '$utils/PackImporter'
+	import { toast } from '$cmp/toast';
 	let packs = packStore.data
 
-
 	function handleImport(event){
-		const pack = PackImporter(event.detail.data)
-		packStore.appendPack(pack)
+		try{
+			const pack = PackImporter(event.detail.data)
+			packStore.appendPack(pack)
+		}catch(e){
+			return toast.error("Error importing pack")
+		}
+		toast.success("Pack imported successfully")
 	}
 
 </script>
-
+<title>
+	Your packs
+</title>
 
 <Title style="margin-top: 2rem;">Your Packs</Title>
 <div class="pack-wrapper">
@@ -64,7 +71,6 @@
 		margin-left: 0;
 		display: flex;
 		align-items: center;
-		margin-top: 1rem;
 		width: fit-content;
 		transition: all 0.2s;
 	}
