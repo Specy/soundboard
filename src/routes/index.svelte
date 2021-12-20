@@ -11,7 +11,8 @@
 
 
 	function handleImport(event){
-		PackImporter(event.detail.data)
+		const pack = PackImporter(event.detail.data)
+		packStore.appendPack(pack)
 	}
 
 </script>

@@ -128,7 +128,7 @@ class Pack{
             metaString,
             ...(audios.map(audio => audio.buffer))
         ])
-        fileDownloader(blob,`${this.name}-${this.author}.soundpack`)
+        fileDownloader(blob,`${this.name}-${this.author}.sp`)
     }
     play = (audio: Audio) => {
         let player = audioContext.createBufferSource()
@@ -191,7 +191,8 @@ init()
 export {
     packStore,
     Pack,
-    Audio
+    Audio,
+    id
 }
 export type{
     newAudio,
