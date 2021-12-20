@@ -1,7 +1,8 @@
 import { writable, get } from "svelte/store";
 import type { Writable } from 'svelte/store'
 import { browser } from "$app/env";
-import type { Db } from "../utils/db";
+import type { Db } from "$utils/db";
+import fileDownloader from "$utils/fileDownloader"
 let DB: Db
 let audioContext: AudioContext
 if(browser) audioContext = new AudioContext()
@@ -38,7 +39,11 @@ class Packs{
         await DB.packs.add({...data, id:pack.id})
         return pack
     }
-
+    appendPack = async (pack: Pack) => {
+        const data = pack.toObj()
+        this.data.update(d => [...d, pack])
+        await DB.packs.add({...data, id:pack.id})
+    }
     remove = async (id:string) => {
         if(!this.loaded) return
         await DB.packs.delete(id)
@@ -91,7 +96,40 @@ class Pack{
         await DB.audios.delete(id)
         this.audios.update(d => d.filter((a) => a.id !== id))
     }
-
+    toObj = ():newPack => {
+        return {
+            author: this.author,
+            description: this.description,
+            image: this.image,
+            name: this.name,
+            id: this.id
+        }
+    }
+    toFile = () => {
+        const audios = get(this.audios)
+        const audioMetadata = audios.map((audio) => {
+            return {
+                length: audio.buffer.byteLength,
+                name: audio.name,
+                description: audio.description,
+            }
+        })
+        const metadata = {
+            author: this.author,
+            name: this.name,
+            image: this.image,
+            description: this.description,
+            audioMetadata: audioMetadata
+        }
+        const metaString = new TextEncoder().encode(JSON.stringify(metadata))
+        const marker = new Uint32Array([metaString.byteLength + 4])
+        const blob = new Blob([
+            marker,
+            metaString,
+            ...(audios.map(audio => audio.buffer))
+        ])
+        fileDownloader(blob,`${this.name}-${this.author}.soundpack`)
+    }
     play = (audio: Audio) => {
         let player = audioContext.createBufferSource()
         player.buffer = audio.decoded
@@ -151,5 +189,11 @@ async function init() {
 }
 init()
 export {
-    packStore
+    packStore,
+    Pack,
+    Audio
+}
+export type{
+    newAudio,
+    newPack,
 }

@@ -6,7 +6,14 @@
 	import Pack from '$cmp/Pack.svelte'
 	import { packStore } from '$stores/Packs'
 	import { theme } from '$lib/theme'
+	import PackImporter from '$utils/PackImporter'
 	let packs = packStore.data
+
+
+	function handleImport(event){
+		PackImporter(event.detail.data)
+	}
+
 </script>
 
 
@@ -29,7 +36,9 @@
 			<FaPlus />
 		</div>
 	</a>
-
+	<FileImporter on:import={handleImport} as="buffer">
+		<Button value='Import pack'/>
+	</FileImporter>
 </div>
 
 

@@ -11,6 +11,7 @@
 	import Input from '$cmp/Input.svelte'
 	import Audio from '$cmp/Audio.svelte'
 	import { theme } from '$lib/theme'
+	import fileDownlaoder from '$utils/fileDownloader'
 	const ID = $page.params.pack
 	let pack = packStore.get(ID)
 	let audios = pack?.audios
@@ -62,10 +63,7 @@
 				files: [file]
 			})
 		} else {
-			const a = document.createElement('a')
-			a.href = window.URL.createObjectURL(blob)
-			a.download = audio.name + '.mp3'
-			a.click()
+			fileDownlaoder(blob,audio.name + '.mp3')
 		}
 	}
 	function play(audio) {
@@ -81,7 +79,7 @@
 				<img src={pack.image} alt={pack.name} />
 			</div>
 			<div class="buttons-wrapper">
-				<div class="icon" on:click={() => toast.warn("Coming soon")}>
+				<div class="icon" on:click={() => pack.toFile()}>
 					<FaDownload />
 				</div>
 				<div class="icon" style="color: rgb(237, 79, 79);" on:click={deleteThis}>
